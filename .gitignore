@@ -1,32 +1,38 @@
 .DS_Store
+Thumbs.db
 
+# CodeIgniter 3 Core Logs & Cache
 application/cache/*
 !application/cache/index.html
-
+!application/cache/.htaccess
 application/logs/*
 !application/logs/index.html
+!application/logs/.htaccess
 
+# Environment Configuration
+*/config/development/
+*/logs/log-*.php
+
+# Security & Package Manager
 !application/*/.htaccess
-
 composer.lock
-tests/mocks/database/ci_test.sqlite
+/vendor/
 
+# User Guide & Testing
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
+tests/mocks/database/ci_test.sqlite
+/tests/tests/
+/tests/results/
 
-# IDE Files
-#-------------------------
+# IDE & Text Editor Files
 /nbproject/
 .idea/*
-
-## Sublime Text cache files
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-/tests/tests/
-/tests/results/
+.vscode/
