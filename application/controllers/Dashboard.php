@@ -15,7 +15,12 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
-        // Halaman ini aman, hanya bisa dilihat kalau sudah login 
-        $this->load->view('dashboard/v_main');
+        // Halaman ini aman, hanya bisa dilihat kalau sudah login
+        $data['title'] = 'Dashboard';
+        $data['user'] = array(
+            'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+            'role'         => $this->session->userdata('role')
+        );
+        $this->load->view('dashboard/v_dashboard', $data);
     }
 }
