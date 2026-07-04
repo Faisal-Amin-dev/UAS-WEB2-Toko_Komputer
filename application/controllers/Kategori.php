@@ -22,6 +22,10 @@ class Kategori extends CI_Controller {
     public function index() {
         $data['title'] = 'Data Kategori';
         $data['kategori'] = $this->M_kategori->get_all_kategori();
+        $data['user'] = array(
+            'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+            'role'         => $this->session->userdata('role')
+        );
         $this->load->view('kategori/index', $data);
     }
 
@@ -32,6 +36,10 @@ class Kategori extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Tambah Kategori';
             $data['kategori'] = null;
+            $data['user'] = array(
+                'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+                'role'         => $this->session->userdata('role')
+            );
             $this->load->view('kategori/form', $data);
         } else {
             $this->M_kategori->insert_kategori(array(
@@ -54,6 +62,10 @@ class Kategori extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Edit Kategori';
+            $data['user'] = array(
+                'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+                'role'         => $this->session->userdata('role')
+            );
             $this->load->view('kategori/form', $data);
         } else {
             $this->M_kategori->update_kategori($id, array(

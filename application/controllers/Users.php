@@ -21,7 +21,12 @@ class Users extends CI_Controller {
     }
 
     public function index() {
-
-        $this->load->view('users/v_list');
+        $data['title'] = 'Data Users';
+        $data['users'] = $this->db->get('users')->result();
+        $data['user'] = array(
+            'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+            'role'         => $this->session->userdata('role')
+        );
+        $this->load->view('users/v_list', $data);
     }
 }

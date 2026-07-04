@@ -29,13 +29,13 @@
                 <a href="<?= base_url('dashboard'); ?>" class="nav-link text-white"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
             </li>
             <li class="nav-item">
-                <a href="<?= base_url('kategori'); ?>" class="nav-link text-white active"><i class="fas fa-tags mr-2"></i>Kategori</a>
+                <a href="<?= base_url('kategori'); ?>" class="nav-link text-white"><i class="fas fa-tags mr-2"></i>Kategori</a>
             </li>
             <li class="nav-item">
                 <a href="<?= base_url('produk'); ?>" class="nav-link text-white"><i class="fas fa-box mr-2"></i>Produk</a>
             </li>
             <li class="nav-item">
-                <a href="<?= base_url('penjualan'); ?>" class="nav-link text-white"><i class="fas fa-shopping-cart mr-2"></i>Penjualan</a>
+                <a href="<?= base_url('penjualan'); ?>" class="nav-link text-white active"><i class="fas fa-shopping-cart mr-2"></i>Penjualan</a>
             </li>
             <?php if ($user['role'] === 'admin') : ?>
             <li class="nav-item">
@@ -50,7 +50,7 @@
     <div class="flex-grow-1 p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="mb-0"><?= $title; ?></h4>
-            <a href="<?= base_url('kategori/create'); ?>" class="btn btn-primary btn-sm"><i class="fas fa-plus mr-1"></i>Tambah Kategori</a>
+            <a href="<?= base_url('penjualan/create'); ?>" class="btn btn-primary btn-sm"><i class="fas fa-plus mr-1"></i>Transaksi Baru</a>
         </div>
 
         <?php if ($this->session->flashdata('pesan')) : ?>
@@ -62,29 +62,42 @@
 
         <div class="card shadow-sm">
             <div class="card-body">
+                <form method="GET" class="form-inline mb-3">
+                    <input type="text" class="form-control mr-2 mb-2" name="search" placeholder="Cari nota..." value="<?= $search ?? ''; ?>">
+                    <input type="date" class="form-control mr-2 mb-2" name="tanggal" value="<?= $tanggal ?? ''; ?>">
+                    <button type="submit" class="btn btn-primary mb-2">Filter</button>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead class="thead-dark">
                             <tr>
                                 <th width="50">No</th>
-                                <th>Nama Kategori</th>
+                                <th>Nota</th>
+                                <th>Tanggal</th>
+                                <th>Kasir</th>
+                                <th>Total</th>
                                 <th width="180">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (!empty($kategori)) : ?>
-                                <?php $no = 1; foreach ($kategori as $k) : ?>
+                            <?php if (!empty($penjualan)) : ?>
+                                <?php $no = 1; foreach ($penjualan as $p) : ?>
                                     <tr>
                                         <td><?= $no++; ?></td>
-                                        <td><?= $k->nama_kategori; ?></td>
+                                        <td><strong><?= $p->nota_transaksi; ?></strong></td>
+                                        <td><?= date('d/m/Y H:i', strtotime($p->tanggal_transaksi)); ?></td>
+                                        <td><?= $p->nama_lengkap; ?></td>
+                                        <td>Rp <?= number_format($p->total_bayar, 0, ',', '.'); ?></td>
                                         <td>
-                                            <a href="<?= base_url('kategori/edit/' . $k->id_kategori); ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit mr-1"></i>Edit</a>
-                                            <a href="<?= base_url('kategori/delete/' . $k->id_kategori); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus kategori ini?')"><i class="fas fa-trash mr-1"></i>Hapus</a>
+                                            <a href="<?= base_url('penjualan/detail/' . $p->id_penjualan); ?>" class="btn btn-info btn-sm"><i class="fas fa-eye mr-1"></i>Detail</a>
+                                            <?php if ($user['role'] === 'admin') : ?>
+                                            <a href="<?= base_url('penjualan/delete/' . $p->id_penjualan); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin membatalkan transaksi ini? Stok akan dikembalikan.')"><i class="fas fa-trash mr-1"></i>Hapus</a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
-                                <tr><td colspan="3" class="text-center">Belum ada data kategori.</td></tr>
+                                <tr><td colspan="6" class="text-center">Belum ada transaksi penjualan.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

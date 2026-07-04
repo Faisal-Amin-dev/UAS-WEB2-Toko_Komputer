@@ -75,6 +75,10 @@ class Produk extends CI_Controller {
         $data['search'] = $search;
         $data['id_kategori'] = $kategori_filter;
         $data['title'] = 'Data Produk';
+        $data['user'] = array(
+            'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+            'role'         => $this->session->userdata('role')
+        );
 
         $this->load->view('produk/index', $data);
     }
@@ -91,6 +95,10 @@ class Produk extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Tambah Produk';
             $data['produk'] = null;
+            $data['user'] = array(
+                'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+                'role'         => $this->session->userdata('role')
+            );
             $this->load->view('produk/form', $data);
         } else {
             $gambar = $this->_upload_gambar();
@@ -128,6 +136,10 @@ class Produk extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Edit Produk';
+            $data['user'] = array(
+                'nama_lengkap' => $this->session->userdata('nama_lengkap'),
+                'role'         => $this->session->userdata('role')
+            );
             $this->load->view('produk/form', $data);
         } else {
             $gambar = $this->_upload_gambar();
