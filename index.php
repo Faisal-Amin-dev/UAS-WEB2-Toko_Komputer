@@ -66,8 +66,8 @@
 switch (ENVIRONMENT)
 {
 	case 'development':
-		error_reporting(-1);
-		ini_set('display_errors', 1);
+		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+        ini_set('display_errors', 1);
 	break;
 
 	case 'testing':
@@ -312,4 +312,6 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
+require_once FCPATH . 'vendor/autoload.php';
+
 require_once BASEPATH.'core/CodeIgniter.php';

@@ -36,3 +36,6 @@ tests/mocks/database/ci_test.sqlite
 *.sublime-workspace
 *.sublime-project
 .vscode/
+
+# Temporary & Testing Artifacts
+cookies.txt
